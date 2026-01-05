@@ -43,13 +43,11 @@ export const EncryptedCallout = ({ block, children }: { block: any; children: an
     callout: {
       ...block.callout,
       rich_text: [], // 清空标题文字
-      icon: null     // 🚫 关键优化：清空图标，防止占据顶部空间
+      icon: null     // 清空图标
     }
   };
 
-  // ✂️ 内容裁切逻辑 (核心优化)
-  // 如果已解锁，我们移除第一个子元素（即那条分割线）
-  // 这样就能完美消除分割线带来的横线和上下间距
+  // ✂️ 内容裁切逻辑
   const childrenArray = React.Children.toArray(children);
   const unlockedContent = isUnlocked && childrenArray.length > 0 
       ? childrenArray.slice(1) // 切掉第一个(分割线)
@@ -64,20 +62,13 @@ export const EncryptedCallout = ({ block, children }: { block: any; children: an
         `}
     >
       
-      {/* =========================================================
-          内容层
-          1. 锁定状态：限制高度，模糊
-          2. 解锁状态：无限制，清除 padding
-      ========================================================= */}
+      {/* 内容层 */}
       <div 
         className={`
           relative w-full transition-all duration-700 ease-in-out
           ${isUnlocked ? 'max-h-full opacity-100' : 'max-h-[450px] overflow-hidden'}
           
-          /* 🔧 关键 CSS 修正：
-             当解锁后，强制移除 Callout 内部默认的 padding，
-             让内容直接顶格显示，消除留白。
-          */
+          /* 消除内边距 CSS */
           [&_.notion-callout]:!p-0
           [&_.notion-callout]:!bg-transparent
           [&_.notion-callout]:!border-none
@@ -92,12 +83,12 @@ export const EncryptedCallout = ({ block, children }: { block: any; children: an
             `}
         >
             <Callout block={cleanBlock}>
-                {/* 传入处理过的内容（去掉了分割线） */}
-                {unlockedContent}
+                {/* ⬇️ 修复点：加了一层空标签 <>...</> 把数组包起来，解决 TS 报错 */}
+                <>{unlockedContent}</>
             </Callout>
         </div>
 
-        {/* 覆盖层：未解锁时的底部遮罩 */}
+        {/* 遮罩层 */}
         {!isUnlocked && (
              <div className="absolute inset-x-0 bottom-0 h-32 bg-gradient-to-t from-white dark:from-[#121212] to-transparent z-10"></div>
         )}
@@ -105,9 +96,7 @@ export const EncryptedCallout = ({ block, children }: { block: any; children: an
       </div>
 
 
-      {/* =========================================================
-          锁界面 UI (Overlay)
-      ========================================================= */}
+      {/* 锁界面 UI (Overlay) */}
       {!isUnlocked && (
         <div className="absolute inset-0 z-20 flex flex-col items-center justify-center p-4">
           <div className="relative z-30 flex flex-col items-center w-full max-w-sm p-6 rounded-2xl bg-white/10 dark:bg-black/20 backdrop-blur-md border border-white/20 dark:border-white/10 shadow-lg">
