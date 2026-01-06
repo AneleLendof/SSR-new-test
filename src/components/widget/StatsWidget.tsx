@@ -72,7 +72,7 @@ export const StatsWidget = ({ data }: { data: BlogStats }) => {
               👑永久会员：￥000
             </h3>
             <p className="text-xs text-gray-400 mb-6 font-medium">
-              请通过网页右下角客服工具发送商家编号，按照客服指引完成注册及购买，点击复制👇
+              请打开网页右下角客服工具发送当前站点编号，按照指引完成注册及购买，点击复制👇
             </p>
             
             {/* 编号显示区域：深色凹陷质感 */}
