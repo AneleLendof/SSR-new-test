@@ -5,7 +5,7 @@ import { createPortal } from 'react-dom'
 import { WidgetContainer } from './WidgetContainer'
 
 // 硬编码商家编号
-const SHOP_CODE = "PRO-001A"
+const SHOP_CODE = "PRO-000"
 
 export const StatsWidget = ({ data }: { data: BlogStats }) => {
   const [showModal, setShowModal] = useState(false)
@@ -69,10 +69,10 @@ export const StatsWidget = ({ data }: { data: BlogStats }) => {
             
             {/* 标题 */}
             <h3 className="text-xl font-bold text-white mb-2 tracking-wide drop-shadow-sm">
-              商家编号
+              👑永久会员：￥000
             </h3>
             <p className="text-xs text-gray-400 mb-6 font-medium">
-              点击下方卡片即可复制
+              请通过网页右下角客服工具发送商家编号，按照客服指引完成注册及购买，点击复制👇
             </p>
             
             {/* 编号显示区域：深色凹陷质感 */}
@@ -95,7 +95,7 @@ export const StatsWidget = ({ data }: { data: BlogStats }) => {
                 ${isCopied ? 'opacity-100 visible scale-100' : 'opacity-0 invisible scale-95'}
               `}>
                 <span className="text-xs font-bold text-white flex items-center gap-1">
-                  <span>✨</span> 已复制成功
+                  <span>✨</span> 复制成功
                 </span>
               </div>
             </div>
@@ -161,7 +161,7 @@ export const StatsWidget = ({ data }: { data: BlogStats }) => {
             {/* 上半部分：标题 */}
             <div className="flex-1 flex flex-col items-center justify-center">
                <h2 className="text-2xl font-extrabold text-white tracking-wide drop-shadow-lg antialiased group-hover/card:text-blue-50 transition-colors">
-                 查看商家编号
+                 会员服务
                </h2>
             </div>
 
@@ -179,7 +179,7 @@ export const StatsWidget = ({ data }: { data: BlogStats }) => {
                     transition-all duration-300
                     hover:shadow-white/20"
                 >
-                  <span className="relative z-10">查看商家编号</span>
+                  <span className="relative z-10">会员价格</span>
                   <div className="absolute inset-0 w-full h-full bg-gradient-to-r from-transparent via-black/10 to-transparent -translate-x-full group-hover/btn:animate-shimmer z-0 pointer-events-none"></div>
                 </button>
 
