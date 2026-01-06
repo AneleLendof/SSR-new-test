@@ -48,7 +48,7 @@ export const StatsWidget = ({ data }: { data: BlogStats }) => {
           <div className="mx-auto mb-4 flex h-12 w-12 items-center justify-center rounded-full bg-white/5 border border-white/10">
             <span className="text-xl">🏷️</span>
           </div>
-          <h3 className="text-lg font-bold text-white mb-1 tracking-wide">商家编号</h3>
+          <h3 className="text-lg font-bold text-white mb-1 tracking-wide">查看编号</h3>
           <p className="text-xs text-gray-400 mb-5">点击下方卡片复制编号</p>
           <div 
             onClick={handleCopy}
@@ -56,7 +56,7 @@ export const StatsWidget = ({ data }: { data: BlogStats }) => {
           >
             <span className="text-xl font-mono font-bold text-white tracking-widest">{SHOP_CODE}</span>
             <div className={`absolute inset-0 flex items-center justify-center rounded-xl bg-blue-600 transition-all duration-200 ${isCopied ? 'opacity-100 visible' : 'opacity-0 invisible'}`}>
-              <span className="text-xs font-bold text-white">已复制 ✅</span>
+              <span className="text-xs font-bold text-white">已复制√</span>
             </div>
           </div>
           <button
@@ -105,7 +105,7 @@ export const StatsWidget = ({ data }: { data: BlogStats }) => {
                 2. 使用 antialiased 开启抗锯齿，文字更锐利。
              */}
              <h2 className="text-2xl font-extrabold text-white tracking-wide drop-shadow-lg antialiased">
-               查看商家编号
+               会员服务
              </h2>
           </div>
 
@@ -128,7 +128,7 @@ export const StatsWidget = ({ data }: { data: BlogStats }) => {
                 <div className="absolute inset-0 w-full h-full bg-gradient-to-r from-transparent via-black/10 to-transparent -translate-x-full group-hover:animate-shimmer z-0 pointer-events-none"></div>
                 
                 {/* 文字层：z-10 确保在流光之上 */}
-                <span className="relative z-10">查看商家编号</span>
+                <span className="relative z-10">商家编号</span>
               </button>
 
               {/* 按钮 2：前往一站式 (红色流光) */}
