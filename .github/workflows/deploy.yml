@@ -51,6 +51,6 @@ jobs:
           apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
           accountId: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
           # ⚠️⚠️⚠️ 下面这个名字一定要改！改成第一阶段你创建的 Cloudflare 项目名
-          projectName: 'my-daily-blog' 
+          projectName: 'fcssr-new-test' 
           directory: 'out' # 对应 yarn export 的输出目录
           gitHubToken: ${{ secrets.GITHUB_TOKEN }}
