@@ -3,7 +3,6 @@ import React, { useState, useEffect, useCallback } from 'react'
 // @ts-ignore
 import { createPortal } from 'react-dom'
 import { WidgetContainer } from './WidgetContainer'
-C
 const SHOP_CODE = "PRO-001C"
 const ONE_STOP_URL = "https://login.1zs.top/"
 
