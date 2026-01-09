@@ -1,0 +1,56 @@
+name: Deploy to Cloudflare Pages
+
+on:
+  # 1. 代码有更新时触发
+  push:
+    branches: [main, master]
+  
+  # 2. 允许你手动点击按钮触发 (方便测试)
+  workflow_dispatch:
+  
+  # 3. 定时自动触发 (每日自动更新)
+  schedule:
+    # 语法是 Cron 表达式 (UTC时间)
+    # 北京时间 00:00 等于 UTC时间 前一天的 16:00
+    - cron: '0 16 * * *'
+
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+    # 设置6小时超时，彻底解决文章多跑不完的问题
+    timeout-minutes: 360 
+
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v4
+
+      # 1. 配置 Node.js 环境 (指定你要求的版本)
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20.19.2'
+          cache: 'yarn' # 开启 yarn 缓存加速
+
+      # 2. 安装依赖
+      - name: Install Dependencies
+        run: yarn install --frozen-lockfile
+
+      # 3. 构建项目 (拉取 Notion 数据并生成 HTML)
+      - name: Build Project
+        run: yarn export
+        env:
+          # 注入环境变量供 NotionNext 使用
+          NOTION_KEY: ${{ secrets.NOTION_KEY }}
+          NOTION_DATABASE_ID: ${{ secrets.NOTION_DATABASE_ID }}
+          # NODE_VERSION 已经在 setup-node 中指定，无需在此重复
+
+      # 4. 推送到 Cloudflare (直接上传 out 文件夹)
+      - name: Deploy to Cloudflare Pages
+        uses: cloudflare/pages-action@v1
+        with:
+          apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          accountId: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+          # ⚠️⚠️⚠️ 下面这个名字一定要改！改成第一阶段你创建的 Cloudflare 项目名
+          projectName: 'my-daily-blog' 
+          directory: 'out' # 对应 yarn export 的输出目录
+          gitHubToken: ${{ secrets.GITHUB_TOKEN }}
