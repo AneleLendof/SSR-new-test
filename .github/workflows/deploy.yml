@@ -41,6 +41,6 @@ jobs:
         with:
           apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
           accountId: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
-          projectName: 'my-daily-blog' # ⚠️ 这里记得确认一下是不是你刚才创建的项目名
+          projectName: 'fcssr-new-test' # ⚠️ 这里记得确认一下是不是你刚才创建的项目名
           directory: 'out'
           gitHubToken: ${{ secrets.GITHUB_TOKEN }}
