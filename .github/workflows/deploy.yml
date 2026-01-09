@@ -5,7 +5,13 @@ on:
     branches: [main, master]
   workflow_dispatch:
   schedule:
-    - cron: '0 16 * * *' # 每日自动更新
+    - cron: '0 16 * * *'
+
+# 👇👇👇 新增的权限配置区域 👇👇👇
+permissions:
+  contents: read
+  deployments: write
+# 👆👆👆 新增结束 👆👆👆
 
 jobs:
   build-and-deploy:
@@ -16,31 +22,25 @@ jobs:
       - name: Checkout Code
         uses: actions/checkout@v4
 
-      # 1. 配置 Node.js
       - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
           node-version: '20.19.2'
-          # cache: 'yarn'  <-- 删掉了这一行，不再强制要求 yarn.lock
 
-      # 2. 安装依赖
       - name: Install Dependencies
-        # 删掉了 --frozen-lockfile，这样即使没有 lock 文件也能安装
-        run: yarn install 
+        run: yarn install
 
-      # 3. 构建项目
       - name: Build Project
         run: yarn export
         env:
           NOTION_KEY: ${{ secrets.NOTION_KEY }}
           NOTION_DATABASE_ID: ${{ secrets.NOTION_DATABASE_ID }}
 
-      # 4. 推送
       - name: Deploy to Cloudflare Pages
         uses: cloudflare/pages-action@v1
         with:
           apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
           accountId: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
-          projectName: 'fcssr-new-test' # ⚠️ 这里记得确认一下是不是你刚才创建的项目名
+          projectName: 'fcssr-new-test' # 保持你上次填对的名字
           directory: 'out'
           gitHubToken: ${{ secrets.GITHUB_TOKEN }}
